@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlassian Support Tiered Cost Estimator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 220px;
+            background-color: #1c4a76; /* Darker primary blue shade for tooltip background */
+            color: #ffffff; /* White text for tooltip */
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 10px;
+            position: absolute;
+            z-index: 10;
+            bottom: 130%;
+            left: 50%;
+            margin-left: -110px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 0.8rem;
+        }
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1c4a76 transparent transparent transparent; /* Match tooltip background */
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .input-group label {
+            cursor: default;
+        }
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); /* White arrow */
+            background-repeat: no-repeat;
+            background-position: right .7em top 50%;
+            background-size: .65em auto;
+            padding-right: 2.5em;
+        }
+        .tier-card {
+            border: 1px solid #2874bc; /* Primary blue border */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .tier-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(34,96,149,0.2), 0 4px 6px -2px rgba(34,96,149,0.15); /* Shadow with primary blue tint */
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 to-slate-800 flex flex-col items-center justify-center min-h-screen p-4 text-white">
+
+    <div class="calculator-container bg-slate-800 p-6 sm:p-8 md:p-10 rounded-xl shadow-2xl w-full max-w-2xl border border-[#2874bc]/50">
+        <h1 class="text-2xl sm:text-3xl font-bold text-center text-[#60a5fa] mb-8">Atlassian Support Tiered Estimator</h1>
+
+        <div class="input-group mb-6">
+            <label for="projects" class="block mb-2 text-sm font-medium text-[#add8e6]">
+                Number of Projects/Teams
+                <span class="tooltip text-gray-400 text-xs cursor-help">(?)
+                    <span class="tooltiptext">Enter the total number of distinct projects or teams that will require support. Affects complexity.</span>
+                </span>
+            </label>
+            <input type="number" id="projects" min="1" value="2" required
+                   class="bg-[#1c4a76] border border-[#2874bc] text-white text-sm rounded-lg focus:ring-[#60a5fa] focus:border-[#60a5fa] block w-full p-3 shadow-sm transition-colors duration-150">
+        </div>
+
+        <div class="input-group mb-6">
+            <label for="users" class="block mb-2 text-sm font-medium text-[#add8e6]"> 
+                Total Number of Licensed Users
+                <span class="tooltip text-gray-400 text-xs cursor-help">(?)
+                    <span class="tooltiptext">Enter the total count of users who have licenses for the Atlassian products. Affects support volume.</span>
+                </span>
+            </label>
+            <input type="number" id="users" min="1" value="75" required
+                   class="bg-[#1c4a76] border border-[#2874bc] text-white text-sm rounded-lg focus:ring-[#60a5fa] focus:border-[#60a5fa] block w-full p-3 shadow-sm transition-colors duration-150">
+        </div>
+
+        <div class="input-group mb-6">
+            <label for="supportLevel" class="block mb-2 text-sm font-medium text-[#add8e6]"> 
+                Support Level
+                <span class="tooltip text-gray-400 text-xs cursor-help">(?)
+                    <span class="tooltiptext">Choose the type of administrative support required. Primary support involves more direct responsibility.</span>
+                </span>
+            </label>
+            <select id="supportLevel"
+                    class="bg-[#1c4a76] border border-[#2874bc] text-white text-sm rounded-lg focus:ring-[#60a5fa] focus:border-[#60a5fa] block w-full p-3 shadow-sm transition-colors duration-150">
+                <option value="secondary">Secondary Support</option>
+                <option value="primary">Primary Support</option>
+            </select>
+        </div>
+        
+        <div class="input-group mb-6">
+            <label for="supportDuration" class="block mb-2 text-sm font-medium text-[#add8e6]"> 
+                Support Duration (Months)
+                <span class="tooltip text-gray-400 text-xs cursor-help">(?)
+                    <span class="tooltiptext">Select the desired length of the support engagement.</span>
+                </span>
+            </label>
+            <select id="supportDuration"
+                    class="bg-[#1c4a76] border border-[#2874bc] text-white text-sm rounded-lg focus:ring-[#60a5fa] focus:border-[#60a5fa] block w-full p-3 shadow-sm transition-colors duration-150">
+                <option value="3">3 Months</option>
+                <option value="6" selected>6 Months</option>
+                <option value="9">9 Months</option>
+                <option value="12">12 Months (1 Year)</option>
+                <option value="18">18 Months</option>
+                <option value="24">24 Months (2 Years)</option>
+            </select>
+        </div>
+
+        <div id="secondarySupportInfo" class="mb-4 p-3 bg-[#1c4a76]/80 border border-[#2874bc]/70 rounded-lg text-sm text-gray-200">
+            <h3 class="font-semibold text-[#60a5fa] mb-1">Secondary Support:</h3>
+            <p>We assist your existing Atlassian administrators. This includes guidance, advanced troubleshooting, best practice implementation, and backup support for their administrative duties.</p>
+        </div>
+        <div id="primarySupportInfo" class="hidden mb-4 p-3 bg-[#1c4a76]/80 border border-[#2874bc]/70 rounded-lg text-sm text-gray-200">
+            <h3 class="font-semibold text-[#60a5fa] mb-1">Primary Support:</h3>
+            <p>We take on the role of your primary Atlassian administrator. This involves managing users, permissions, workflows, configurations, upgrades, and providing direct end-user support as needed.</p>
+        </div>
+
+        <button id="calculateBtn"
+                class="w-full bg-[#2874bc] hover:bg-[#1f5a8f] text-white font-bold py-3 px-4 rounded-lg transition duration-150 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#60a5fa] focus:ring-opacity-75">
+            Calculate Recommended Support Tiers
+        </button>
+
+        <div id="resultsContainer" class="mt-8 space-y-4">
+            </div>
+        <div id="error-message-box" class="hidden mt-4 p-3 bg-red-500/20 border border-red-500 text-red-300 rounded-lg text-sm">
+        </div>
+
+
+        <div id="calculation-details" class="mt-6 p-4 bg-[#1c4a76]/90 border border-[#2874bc]/70 rounded-lg text-xs text-gray-200 space-y-1" style="display: none;">
+            </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Get references to HTML elements ---
+            const projectsInput = document.getElementById('projects');
+            const usersInput = document.getElementById('users');
+            const supportLevelSelect = document.getElementById('supportLevel');
+            const supportDurationSelect = document.getElementById('supportDuration');
+            const calculateBtn = document.getElementById('calculateBtn');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const detailsDiv = document.getElementById('calculation-details');
+            const primarySupportInfoDiv = document.getElementById('primarySupportInfo');
+            const secondarySupportInfoDiv = document.getElementById('secondarySupportInfo');
+            const errorMessageBox = document.getElementById('error-message-box');
+
+            // --- Configuration Constants ---
+            const HOURLY_RATE = 250; 
+            const BASE_HOURLY_FACTOR_SECONDARY = 40 / 7.5;
+            const BASE_HOURLY_FACTOR_PRIMARY = BASE_HOURLY_FACTOR_SECONDARY * 1.5; 
+
+            const TIERS = [
+                { name: "Essential", multiplier: 0.75, description: "Core support for critical needs." },
+                { name: "Standard", multiplier: 1.0, description: "Comprehensive support for ongoing operations." },
+                { name: "Premium", multiplier: 1.25, description: "Extensive support with proactive guidance." }
+            ];
+
+            // --- Helper Functions for Multipliers ---
+            function getUserMultiplier(numUsers) {
+                if (numUsers <= 0) return 0.5;
+                if (numUsers <= 25) return 0.8;
+                if (numUsers <= 75) return 1.25;
+                if (numUsers <= 150) return 1.5;
+                if (numUsers <= 300) return 1.75;
+                if (numUsers <= 500) return 2.0;
+                return 2.25;
+            }
+
+            function getProjectMultiplier(numProjects) {
+                if (numProjects <= 0) return 0.5;
+                if (numProjects === 1) return 1.0;
+                if (numProjects === 2) return 1.3336;
+                if (numProjects <= 4) return 1.6;
+                if (numProjects <= 7) return 1.85;
+                if (numProjects <= 10) return 2.1;
+                return 2.35;
+            }
+
+            // --- Toggle Support Info Display ---
+            function toggleSupportInfo() {
+                if (supportLevelSelect.value === 'primary') {
+                    primarySupportInfoDiv.classList.remove('hidden');
+                    secondarySupportInfoDiv.classList.add('hidden');
+                } else {
+                    secondarySupportInfoDiv.classList.remove('hidden');
+                    primarySupportInfoDiv.classList.add('hidden');
+                }
+            }
+            toggleSupportInfo();
+
+            // --- Display Error Message ---
+            function displayError(message) {
+                errorMessageBox.textContent = message;
+                errorMessageBox.classList.remove('hidden');
+                resultsContainer.innerHTML = ''; 
+                detailsDiv.style.display = 'none';
+            }
+
+            // --- Clear Error Message ---
+            function clearError() {
+                errorMessageBox.classList.add('hidden');
+                errorMessageBox.textContent = '';
+            }
+
+            // --- Main Calculation Function ---
+            function calculateTieredEstimates() {
+                clearError(); 
+
+                const numProjects = parseInt(projectsInput.value, 10);
+                const numUsers = parseInt(usersInput.value, 10);
+                const supportType = supportLevelSelect.value;
+                const durationMonths = parseInt(supportDurationSelect.value, 10);
+
+                let errorMessages = [];
+                if (isNaN(numProjects) || numProjects <= 0) {
+                    errorMessages.push("Number of Projects/Teams must be a positive number.");
+                }
+                if (isNaN(numUsers) || numUsers <= 0) {
+                    errorMessages.push("Total Number of Licensed Users must be a positive number.");
+                }
+                if (isNaN(durationMonths) || durationMonths <= 0) {
+                    errorMessages.push("Support Duration must be a positive number.");
+                }
+
+                if (errorMessages.length > 0) {
+                    displayError(errorMessages.join(" "));
+                    return; 
+                }
+
+                const baseHourlyFactor = (supportType === 'primary') ? BASE_HOURLY_FACTOR_PRIMARY : BASE_HOURLY_FACTOR_SECONDARY;
+                const userMultiplier = getUserMultiplier(numUsers);
+                const projectMultiplier = getProjectMultiplier(numProjects);
+                const baseRecommendedHoursRaw = durationMonths * baseHourlyFactor * userMultiplier * projectMultiplier;
+
+                resultsContainer.innerHTML = '';
+                detailsDiv.innerHTML = '';
+
+                TIERS.forEach(tier => {
+                    // Calculate raw hours for the tier
+                    let recommendedHoursForTierRaw = baseRecommendedHoursRaw * tier.multiplier;
+                    // Round to the nearest multiple of 5
+                    let recommendedHours = Math.round(recommendedHoursForTierRaw / 5) * 5;
+                    
+                    // Ensure a minimum of 5 hours if the calculation results in something positive but less than 5
+                    if (recommendedHoursForTierRaw > 0 && recommendedHours < 5) {
+                        recommendedHours = 5;
+                    }
+                    // If calculation is 0 or negative, keep it 0.
+                    if (recommendedHours < 0) {
+                        recommendedHours = 0;
+                    }
+
+
+                    const estimatedCost = recommendedHours * HOURLY_RATE;
+
+                    // Updated tier card HTML with new color classes
+                    const tierCard = `
+                        <div class="tier-card bg-[#1c4a76] p-5 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 ease-in-out">
+                            <h3 class="text-xl font-semibold text-[#60a5fa] mb-2">${tier.name} Plan</h3>
+                            <p class="text-sm text-gray-300 mb-3">${tier.description}</p>
+                            <div class="grid grid-cols-2 gap-2 mb-3">
+                                <div>
+                                    <p class="text-xs text-[#add8e6]">Recommended Hours:</p>
+                                    <p class="text-lg font-bold text-white">${recommendedHours} hours</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-[#add8e6]">Estimated Cost:</p>
+                                    <p class="text-lg font-bold text-white">${estimatedCost.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 })}</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-400 text-right">(Billed at ${HOURLY_RATE.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })}/hour)</p>
+                        </div>
+                    `;
+                    resultsContainer.innerHTML += tierCard;
+                });
+
+                // Updated calculation details HTML with new color classes
+                // Note: baseRecommendedHoursRaw is used for the "unrounded" display
+                const standardTierBaseHoursRounded = Math.round((baseRecommendedHoursRaw * TIERS[1].multiplier) / 5) * 5;
+
+                detailsDiv.innerHTML = `
+                    <p class="font-semibold text-[#add8e6] mb-2">Calculation Breakdown (for Standard Tier baseline):</p>
+                    <p class="text-gray-200">Inputs:</p>
+                    <ul class="list-disc list-inside ml-4 mb-2 text-gray-200">
+                        <li>Support Level: <span class="font-medium text-white">${supportType === 'primary' ? 'Primary' : 'Secondary'}</span></li>
+                        <li>Number of Projects/Teams: <span class="font-medium text-white">${numProjects}</span></li>
+                        <li>Number of Licensed Users: <span class="font-medium text-white">${numUsers}</span></li>
+                        <li>Support Duration: <span class="font-medium text-white">${durationMonths} months</span></li>
+                    </ul>
+                    <p class="text-gray-200">Multipliers & Factors:</p>
+                    <ul class="list-disc list-inside ml-4 mb-2 text-gray-200">
+                        <li>Base Hourly Factor: <span class="font-medium text-white">${baseHourlyFactor.toFixed(4)}</span> (derived for chosen support level)</li>
+                        <li>User Multiplier: <span class="font-medium text-white">${userMultiplier.toFixed(4)}</span> (for ${numUsers} users)</li>
+                        <li>Project Multiplier: <span class="font-medium text-white">${projectMultiplier.toFixed(4)}</span> (for ${numProjects} projects)</li>
+                    </ul>
+                    <p class="font-semibold text-[#add8e6]">Base Recommended Hours (Standard Tier - Raw):</p>
+                    <p class="mb-1 text-gray-200"><span class="font-medium text-white">${durationMonths} months * ${baseHourlyFactor.toFixed(4)} (factor) * ${userMultiplier.toFixed(4)} (user mult.) * ${projectMultiplier.toFixed(4)} (project mult.)</span></p>
+                    <p class="mb-2 text-gray-200">= <span class="font-medium text-white">${(baseRecommendedHoursRaw * TIERS[1].multiplier).toFixed(2)} hours</span> (unrounded, before tier multiplier)</p>
+                    
+                    <p class="font-semibold text-[#add8e6] mt-3">Tier Adjustments (Hours rounded to nearest 5):</p>
+                    <ul class="list-disc list-inside ml-4 text-gray-200">
+                        <li>Essential Tier: <span class="font-medium text-white">Raw Base Hours * ${TIERS[0].multiplier} = ${Math.round((baseRecommendedHoursRaw * TIERS[0].multiplier)/5)*5} hours</span></li>
+                        <li>Standard Tier: <span class="font-medium text-white">Raw Base Hours * ${TIERS[1].multiplier} = ${standardTierBaseHoursRounded} hours</span></li>
+                        <li>Premium Tier: <span class="font-medium text-white">Raw Base Hours * ${TIERS[2].multiplier} = ${Math.round((baseRecommendedHoursRaw * TIERS[2].multiplier)/5)*5} hours</span></li>
+                    </ul>
+                     <p class="mt-2 text-gray-200">Hourly Rate for Costing: <span class="font-medium text-white">${HOURLY_RATE.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })}/hour</span></p>
+                `;
+                detailsDiv.style.display = 'block';
+            }
+
+            calculateBtn.addEventListener('click', calculateTieredEstimates);
+            supportLevelSelect.addEventListener('change', toggleSupportInfo);
+            // Perform initial calculation on page load
+            calculateTieredEstimates(); 
+        });
+    </script>
+</body>
+</html>
