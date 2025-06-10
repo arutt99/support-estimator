@@ -1,0 +1,238 @@
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+.container {
+    max-width: 1100px; /* Increased width slightly for more text room */
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1, h2 {
+    color: #0052cc; /* Atlassian blue */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.team-management {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Spacing between elements */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.team-management label {
+    font-weight: bold;
+}
+
+.team-management input[type="text"],
+.team-management select {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 150px; /* Ensure select isn't too small */
+    flex-grow: 1; /* Allow input/select to grow */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #0052cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #003b93;
+}
+
+#add-team-btn {
+    background-color: #0065ff;
+}
+#add-team-btn:hover {
+    background-color: #0747a6;
+}
+
+#delete-team-btn {
+    background-color: #de350b; /* Atlassian red */
+}
+#delete-team-btn:hover {
+    background-color: #bf2600;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: fixed; /* Helps control column widths */
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 15px; /* Increased padding */
+    text-align: left;
+    vertical-align: top; /* Align content to the top */
+    word-wrap: break-word; /* Allow long text to wrap */
+}
+
+th {
+    background-color: #dfe1e6; /* Atlassian neutral */
+    font-weight: bold;
+    vertical-align: middle; /* Center header text vertically */
+    text-align: center;
+}
+
+/* Column Widths */
+th:nth-child(1), td:nth-child(1) { width: 15%; } /* Project Phase */
+th:nth-child(2), td:nth-child(2) { width: 7%; text-align: center; } /* N/A */
+th:nth-child(3), td:nth-child(3) { width: 26%; } /* CS1 */
+th:nth-child(4), td:nth-child(4) { width: 26%; } /* CS2 */
+th:nth-child(5), td:nth-child(5) { width: 26%; } /* CS3 */
+
+
+/* Style the selectable cells */
+.selectable-cell {
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+.selectable-cell:hover {
+    background-color: #eef; /* Light violet hover */
+}
+
+.selectable-cell.selected {
+    background-color: #deebff; /* Atlassian subtle blue */
+    font-weight: bold; /* Optional: make selected text bold */
+}
+
+/* Style N/A cell specifically */
+td:nth-child(2).selectable-cell {
+     vertical-align: middle;
+     text-align: center;
+     font-weight: bold;
+}
+
+/* Custom Hours Rows styling */
+.custom-hours-row td {
+    background-color: #f8f9fa; /* Slightly different background */
+}
+.custom-hours-cell {
+    text-align: center; /* Center the content of the cell */
+    vertical-align: middle;
+}
+.custom-phase-hours-input {
+    width: 70px;
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: right;
+    margin-right: 8px;
+}
+
+
+.misc-hours, .total-hours {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ccc;
+    text-align: right;
+}
+
+.misc-hours label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.misc-hours input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 80px;
+}
+
+.total-hours h2 {
+    text-align: right;
+    color: #0052cc;
+    margin-top: 0;
+}
+
+#total-hours-display {
+    font-weight: bold;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center; /* Center buttons */
+    gap: 20px; /* Space between buttons */
+    margin-top: 30px;
+}
+
+#view-summary-btn {
+    background-color: #00875a; /* Green */
+}
+#view-summary-btn:hover {
+    background-color: #006644;
+}
+
+#clear-all-btn {
+    background-color: #ffab00; /* Atlassian yellow/orange for warning */
+    color: #172B4D; /* Dark text for better contrast on yellow */
+}
+#clear-all-btn:hover {
+    background-color: #ff991f;
+}
+
+
+/* Summary Page Specific Styles */
+#summary-table {
+    margin-bottom: 30px;
+    table-layout: auto; /* Let summary table resize naturally */
+}
+#summary-table th, #summary-table td {
+    text-align: center;
+    padding: 10px; /* Adjust padding for summary */
+    width: auto; /* Reset widths for summary */
+}
+#summary-table td:first-child { /* Team Name */
+    text-align: left;
+    font-weight: bold;
+}
+#summary-table td:nth-child(2) { /* Details column */
+    text-align: left; /* Align details left */
+}
+
+#summary-details {
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Footer styling for summary */
+#summary-table tfoot td {
+    font-weight: bold;
+    background-color: #f4f7f6;
+}
+#summary-table tfoot td:first-child {
+     text-align: right; /* Align 'Grand Total:' text */
+}
+
+#back-to-estimator-btn {
+     display: block;
+     width: fit-content;
+     margin: 20px auto;
+}

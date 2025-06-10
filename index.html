@@ -1,0 +1,137 @@
+      
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlassian Pricing Estimator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Atlassian Pricing Estimator</h1>
+
+        <div class="team-management">
+            <label for="team-name-input">Team Name:</label>
+            <input type="text" id="team-name-input" placeholder="Enter team name...">
+            <button id="add-team-btn">Add New Team</button>
+
+            <label for="team-select">Select Team:</label>
+            <select id="team-select">
+                <option value="">-- Select a Team --</option>
+            </select>
+            <button id="delete-team-btn">Delete Selected Team</button>
+        </div>
+
+        <form id="estimator-form">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Project Phase</th>
+                        <th>N/A</th>
+                        <th>Complexity Score: 1</th>
+                        <th>Complexity Score: 2</th>
+                        <th>Complexity Score: 3</th>
+                    </tr>
+                </thead>
+                <tbody id="estimator-tbody">
+                    <tr data-phase-key="discovery" class="custom-hours-row">
+                        <td>Initiation & Discovery</td>
+                        <td colspan="4" class="custom-hours-cell">
+                            <input type="number" id="discovery-hours-input" value="0" min="0" class="custom-phase-hours-input"> Hours
+                        </td>
+                    </tr>
+
+                    <tr data-phase-key="incident-management" data-phase="Incident Management" data-hours='{"na": 0, "cs1": 30, "cs2": 45, "cs3": 60}'>
+                        <td>Incident Management</td>
+                        <td class="selectable-cell" data-value="na">N/A</td>
+                        <td class="selectable-cell" data-value="cs1">Team needs a basic system to log, track, and resolve incidents. Focus is on capturing incidents and routing them to the right team for resolution with minimal process formality. Largely aligns with out-of-the-box JSM capabilities.</td>
+                        <td class="selectable-cell" data-value="cs2">Team requires a more structured incident management process with defined prioritization, basic escalation paths, and improved communication. Involves moderate JSM configuration and potentially basic integration with alerting or communication tools.</td>
+                        <td class="selectable-cell" data-value="cs3">Team requires a robust, highly automated incident management process with deep integrations, sophisticated alerting, advanced communication strategies, and detailed reporting. Heavy reliance on JSM Premium/Enterprise features.</td>
+                    </tr>
+                     <tr data-phase-key="service-management" data-phase="Service Management" data-hours='{"na": 0, "cs1": 50, "cs2": 75, "cs3": 100}'>
+                        <td>Service Management</td>
+                        <td class="selectable-cell" data-value="na">N/A</td>
+                        <td class="selectable-cell" data-value="cs1">Team needs basic request fulfillment capabilities, largely aligning with out-of-the-box JSM features with minimal configuration. Focus is on centralizing requests and providing a basic catalog.</td>
+                        <td class="selectable-cell" data-value="cs2">Team requires more tailored request processes, involving moderate customization of forms, workflows, and some automation. They may have more specific reporting or integration needs.</td>
+                        <td class="selectable-cell" data-value="cs3">Team has sophisticated requirements demanding significant customization, complex workflows, integrations with multiple external systems, advanced automation, or a highly tailored user experience. Typically, involves processes spanning multiple teams or departments with dependencies.</td>
+                    </tr>
+                    <tr data-phase-key="problem-management" data-phase="Problem Management" data-hours='{"na": 0, "cs1": 20, "cs2": 30, "cs3": 40}'>
+                        <td>Problem Management</td>
+                        <td class="selectable-cell" data-value="na">N/A</td>
+                        <td class="selectable-cell" data-value="cs1">Team needs a basic way to log and track identified problems, often reactively identified from incidents. Focus is on capturing the problem and its resolution with minimal process formality.</td>
+                        <td class="selectable-cell" data-value="cs2">Team requires a structured process for identifying, investigating, and resolving problems, including documenting workarounds and linking to related records. Aims to reduce recurring incidents through a defined process.</td>
+                        <td class="selectable-cell" data-value="cs3">Team requires a mature, proactive problem management practice deeply integrated with other ITSM processes. Focus on systematic root cause analysis, managing known errors effectively, and demonstrating measurable reduction in incident volume/impact.</td>
+                    </tr>
+                    <tr data-phase-key="change-management" data-phase="Change Management" data-hours='{"na": 0, "cs1": 30, "cs2": 45, "cs3": 60}'>
+                        <td>Change Management</td>
+                       <td class="selectable-cell" data-value="na">N/A</td>
+                        <td class="selectable-cell" data-value="cs1">Team needs a basic system to log and track change requests with minimal process formality. Focus is on visibility and recording changes rather than strict governance or automation. Largely uses out-of-the-box JSM Change template with minor tweaks.</td>
+                        <td class="selectable-cell" data-value="cs2">Team requires a structured change management process with defined change types, formal risk assessment, standard approvals, and basic scheduling. Utilizes core JSM Change Management features effectively.</td>
+                        <td class="selectable-cell" data-value="cs3">Team requires a mature, highly governed, and potentially automated change management process. Involves deep integration with other areas for impact analysis, advanced risk assessment, dynamic approvals, and comprehensive reporting.</td>
+                    </tr>
+                    <tr data-phase-key="knowledge-management" data-phase="Knowledge Management" data-hours='{"na": 0, "cs1": 10, "cs2": 15, "cs3": 20}'>
+                        <td>Knowledge Management</td>
+                        <td class="selectable-cell" data-value="na">N/A</td>
+                        <td class="selectable-cell" data-value="cs1">Team needs a basic repository for support documentation primarily for internal agent use or simple customer self-service. Focus is on getting content into Confluence and linking it to JSM.</td>
+                        <td class="selectable-cell" data-value="cs2">Team aims for a structured knowledge base supporting both agent efficiency and customer self-service deflection. Requires defined content organization, some workflow elements, and utilizes core JSM knowledge features more actively.</td>
+                        <td class="selectable-cell" data-value="cs3">Team requires a mature knowledge management practice. Demands robust workflows, granular permissions, multi-audience support, deep integration, migration from complex sources, and advanced analytics.</td>
+                    </tr>
+                     <tr data-phase-key="cmdb-asset-management" data-phase="CMDB/Asset Management" data-hours='{"na": 0, "cs1": 30, "cs2": 45, "cs3": 60}'>
+                        <td>CMDB/Asset Management</td>
+                        <td class="selectable-cell" data-value="na">N/A</td>
+                        <td class="selectable-cell" data-value="cs1">Team needs basic inventory tracking for a limited set of asset types. Focus is on manual data entry or simple imports, with basic linking to JSM tickets. Requires minimal configuration of the Assets schema.</td>
+                        <td class="selectable-cell" data-value="cs2">Team needs to track multiple types of assets and config items, potentially including software or services. Requires structured data import from a few sources and meaningful integration with ITSM processes. Involves moderate schema configuration and some automation.</td>
+                        <td class="selectable-cell" data-value="cs3">Team requires a comprehensive CMDB/Asset Management solution tracking diverse CIs (IT, potentially non-IT) with intricate relationships and dependencies. Demands automated data population from multiple disparate sources, advanced automation, and complex reporting. Requires significant schema design and configuration effort.</td>
+                    </tr>
+                     <tr data-phase-key="data-migration" data-phase="Data Migration" data-hours='{"na": 0, "cs1": 30, "cs2": 45, "cs3": 100}'>
+                         <td>Data Migration</td>
+                        <td class="selectable-cell" data-value="na">N/A</td>
+                        <td class="selectable-cell" data-value="cs1">Basic data import, likely focused on getting current or essential data into the new system.</td>
+                        <td class="selectable-cell" data-value="cs2">Standard migration requirement for core ITSM data from a previous system.</td>
+                        <td class="selectable-cell" data-value="cs3">Significant migration effort involving large volumes, complex data types, multiple sources, or poor data quality.</td>
+                    </tr>
+                    <tr data-phase-key="training" data-phase="Training" data-hours='{"na": 0, "cs1": 20, "cs2": 30, "cs3": 40}'>
+                        <td>Training</td>
+                        <td class="selectable-cell" data-value="na">N/A</td>
+                        <td class="selectable-cell" data-value="cs1">Training involves a small group of users, mostly standard functionality. Logistics are straightforward, and standard training materials suffice.</td>
+                        <td class="selectable-cell" data-value="cs2">Training involves a moderate number of users, potentially across a couple of distinct roles or covering several standard ITSM processes with moderate customization. Requires some tailoring of materials and more coordination.</td>
+                        <td class="selectable-cell" data-value="cs3">Training involves a large number of users across multiple distinct roles, covering a broad scope of complex and highly customized processes. Requires significant material customization, potentially multiple delivery modes.</td>
+                    </tr>
+
+                    <tr data-phase-key="production-release" class="custom-hours-row">
+                        <td>Production Release</td>
+                         <td colspan="4" class="custom-hours-cell">
+                            <input type="number" id="release-hours-input" value="0" min="0" class="custom-phase-hours-input"> Hours
+                         </td>
+                    </tr>
+                    <tr data-phase-key="warranty" class="custom-hours-row">
+                        <td>Warranty</td>
+                        <td colspan="4" class="custom-hours-cell">
+                            <input type="number" id="warranty-hours-input" value="0" min="0" class="custom-phase-hours-input"> Hours
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="misc-hours">
+                <label for="misc-hours-input">Misc. Hours (PM, Meetings, Ad-hoc):</label>
+                <input type="number" id="misc-hours-input" value="0" min="0">
+            </div>
+
+            <div class="total-hours">
+                <h2>Total Estimated Hours: <span id="total-hours-display">0</span></h2>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" id="view-summary-btn">View Summary</button>
+                <button type="button" id="clear-all-btn">Clear All Data & Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+    
